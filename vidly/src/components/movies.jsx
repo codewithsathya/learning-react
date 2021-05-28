@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-import Like from "./like";
+import Like from "./common/like";
+import Pagination from "./common/pagination"
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    pageSize: 4
   };
+
+  handlePageChange = pageSize => {
+    console.log('Page changed');
+  }
 
   handleDelete = (movie) => {
     console.log("Deleting", movie.title);
@@ -63,6 +69,7 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination itemsCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange}/>
       </React.Fragment>
     );
   }
