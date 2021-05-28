@@ -2,29 +2,17 @@ import React, { Component } from "react";
 import "font-awesome/css/font-awesome.css";
 
 class Like extends Component {
-  state = {
-    value: 0,
-  };
-
-  handleClick = () => {
-    let value = this.state.value;
-    value = value === 0 ? 1 : 0;
-    this.setState({ value });
-  };
-
   render() {
+    let classes = "fa fa-heart";
+    if (!this.props.liked) classes += "-o";
     return (
-      <div onClick={this.handleClick}>
-        <i className={this.getLikeClasses()}></i>
-      </div>
+      <i
+        onClick={this.props.onLike}
+        className={classes}
+        style={{ cursor: "pointer" }}
+      ></i>
     );
   }
-
-  getLikeClasses = () => {
-    let classes = "fa fa-heart";
-    classes += this.state.value === 0 ? "-o" : "";
-    return classes;
-  };
 }
 
 export default Like;
