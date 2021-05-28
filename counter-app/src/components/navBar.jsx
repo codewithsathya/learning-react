@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class NavBar extends Component {
-  render() { 
-    return ( 
-      <nav className="navbar navbar-light bg-light">
-        <a href="#" className="navbar-brand p-4">
-          Navbar <span className="badge bg-secondary">{this.props.counters.filter(m => m.value > 0).length}</span>
-        </a>
-      </nav>
-     );
-  }
-}
- 
+const NavBar = (props) => {
+  return (
+    <nav className="navbar navbar-light bg-light">
+      <a href="#" className="navbar-brand p-4">
+        Navbar{" "}
+        <span className="badge bg-secondary">{props.totalCounters}</span>
+      </a>
+    </nav>
+  );
+};
+
 export default NavBar;
