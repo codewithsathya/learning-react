@@ -12,7 +12,7 @@ class Movies extends Component {
     genres: [],
     pageSize: 2,
     currentPage: 1,
-    selectedGenre: { name: "All movies", _id: "dead" },
+    selectedGenre: { name: "All movies", _id: "" },
   };
 
   componentDidMount() {
@@ -28,6 +28,10 @@ class Movies extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+
+  handleSort = (path) => {
+    console.log(path);
   };
 
   handleDelete = (movie) => {
@@ -53,7 +57,7 @@ class Movies extends Component {
       movies: allMovies,
     } = this.state;
     const filtered =
-      selectedGenre._id !== "dead"
+      selectedGenre._id !== selectedGenre && selectedGenre._id
         ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
         : allMovies;
 
@@ -74,6 +78,7 @@ class Movies extends Component {
             movies={movies}
             onDelete={this.handleDelete}
             onLike={this.handleLike}
+            onSort={this.handleSort}
           />
           <Pagination
             itemsCount={filtered.length}
