@@ -10,17 +10,20 @@ class Movies extends Component {
   state = {
     movies: [],
     genres: [],
-    pageSize: 4,
+    pageSize: 2,
     currentPage: 1,
-    selectedGenre: null,
+    selectedGenre: { name: "All movies", _id: "dead" },
   };
 
   componentDidMount() {
-    this.setState({ movies: getMovies(), genres: getGenres() });
+    this.setState({
+      movies: getMovies(),
+      genres: [this.state.selectedGenre, ...getGenres()],
+    });
   }
 
   handleGenreSelect = (genre) => {
-    this.setState({ selectedGenre: genre });
+    this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
   handlePageChange = (page) => {
@@ -49,9 +52,10 @@ class Movies extends Component {
       selectedGenre,
       movies: allMovies,
     } = this.state;
-    const filtered = selectedGenre
-      ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
-      : allMovies;
+    const filtered =
+      selectedGenre._id !== "dead"
+        ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+        : allMovies;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
     const movies = paginate(filtered, currentPage, pageSize);
