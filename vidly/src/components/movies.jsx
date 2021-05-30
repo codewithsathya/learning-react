@@ -47,9 +47,11 @@ class Movies extends Component {
     const movies = paginate(allMovies, currentPage, pageSize);
     return (
       <div className="row">
-        <div className="col-2">
+        <div className="col-3">
           <ListGroup
             items={this.state.genres}
+            textProperty="name"
+            valueProperty="_id"
             onItemSelect={this.handleGenreSelect}
           />
         </div>
