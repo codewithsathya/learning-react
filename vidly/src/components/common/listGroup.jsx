@@ -11,10 +11,9 @@ const ListGroup = (props) => {
           key={item[valueProperty]}
           className={
             selectedItem._id === item._id
-              ? "list-group-item active"
-              : "list-group-item"
+              ? "list-group-item clickable active"
+              : "list-group-item clickable"
           }
-          style={{ cursor: "pointer" }}
         >
           {item[textProperty]}
         </li>
