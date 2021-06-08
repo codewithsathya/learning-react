@@ -13,7 +13,7 @@ const NavBar = () => {
         data-toggle="collapse"
         data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup"
-        aria-aria-expanded="false"
+        aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon"></span>
