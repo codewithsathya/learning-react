@@ -8,6 +8,7 @@ import { getGenres } from "../services/fakeGenreService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import { saveMovie } from "./../services/fakeMovieService";
+import SearchBar from "./common/searchBar";
 
 class Movies extends Component {
   state = {
@@ -25,6 +26,14 @@ class Movies extends Component {
       genres: [this.state.selectedGenre, ...getGenres()],
     });
   }
+
+  handleSearch = ({ currentTarget: input }) => {
+    const movies = [...getMovies()];
+    const filtered = movies.filter((movie) => {
+      return movie.title.toLowerCase().includes(input.value.toLowerCase());
+    });
+    this.setState({ movies: filtered });
+  };
 
   handleGenreSelect = (genre) => {
     this.setState({ selectedGenre: genre, currentPage: 1 });
@@ -98,6 +107,7 @@ class Movies extends Component {
             New Movie
           </Link>
           <p>Showing {totalCount} movies in the database.</p>
+          <SearchBar onSearch={this.handleSearch} />
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
