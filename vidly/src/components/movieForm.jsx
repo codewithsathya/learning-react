@@ -1,15 +1,12 @@
 import React from "react";
+import NewMovieForm from "./newMovieForm";
+import { getMovie, getMovies } from "../services/fakeMovieService";
 
 const MovieForm = ({ match, history }) => {
+  console.log(getMovies());
   return (
     <React.Fragment>
-      <h1>Movie Form {match.params.id}</h1>
-      <button
-        className="btn btn-primary"
-        onClick={() => history.replace("/movies")}
-      >
-        Save
-      </button>
+      <NewMovieForm movie={getMovie(match.params.id)} history={history} />
     </React.Fragment>
   );
 };

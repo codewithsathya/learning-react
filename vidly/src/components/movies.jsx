@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import MoviesTable from "./moviesTable";
-import { getMovies } from "../services/fakeMovieService";
+import { getMovies, deleteMovie } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
+import { saveMovie } from "./../services/fakeMovieService";
 
 class Movies extends Component {
   state = {
@@ -38,6 +40,7 @@ class Movies extends Component {
 
   handleDelete = (movie) => {
     console.log("Deleting", movie.title);
+    deleteMovie(movie._id);
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
   };
@@ -47,6 +50,8 @@ class Movies extends Component {
     const index = movies.indexOf(movie);
     movies[index] = { ...movie };
     movies[index].liked = !movie.liked;
+    movies[index].genreId = movies[index].genre._id;
+    saveMovie(movies[index]);
     this.setState({ movies });
   };
 
@@ -71,11 +76,7 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const {
-      pageSize,
-      currentPage,
-      sortColumn,
-    } = this.state;
+    const { pageSize, currentPage, sortColumn } = this.state;
     const { totalCount, data: movies } = this.getPagedData();
 
     if (count === 0) return <p>There are no movies in the database.</p>;
@@ -89,6 +90,9 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
+          <Link to="/movies/new" className="btn btn-primary">
+            New Movie
+          </Link>
           <p>Showing {totalCount} movies in the database.</p>
           <MoviesTable
             movies={movies}

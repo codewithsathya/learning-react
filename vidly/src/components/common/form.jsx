@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import Select from "./select";
 
 class Form extends Component {
   validate = () => {
@@ -40,11 +41,25 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderInput = (name, label, type = 'text') => {
+  renderInput = (name, label, type = "text") => {
     const { data, errors } = this.state;
     return (
       <Input
         type={type}
+        name={name}
+        label={label}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  };
+
+  renderSelect = (genres, name, label) => {
+    const { data, errors } = this.state;
+    return (
+      <Select
+        genres={genres}
         name={name}
         label={label}
         value={data[name]}
