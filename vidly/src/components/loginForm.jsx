@@ -5,13 +5,14 @@ import Form from "./common/form";
 
 class LoginForm extends Form {
   state = {
-    data: { username: "", password: "" },
+    data: { email: "", password: "", name: "" },
     errors: {},
   };
 
   schema = {
-    username: Joi.string().required().label("Username"),
-    password: Joi.string().required().label("Password"),
+    email: Joi.string().email().required().label("Email"),
+    password: Joi.string().required().label("Password").min(5),
+    name: Joi.string().required().label("Name"),
   };
 
   doSubmit = () => {
@@ -24,8 +25,9 @@ class LoginForm extends Form {
       <div className="container">
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
+          {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
+          {this.renderInput("name", "Name")}
           {this.renderButton("Login")}
         </form>
       </div>
