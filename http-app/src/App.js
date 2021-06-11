@@ -1,28 +1,28 @@
 import React, { Component } from "react";
+import config from "./config.json"
 import http from "./services/httpService";
 import "./App.css";
 
-const apiEndPoint = "https://jsonplaceholder.typicode.com/posts";
 class App extends Component {
   state = {
     posts: [],
   };
 
   async componentDidMount() {
-    const { data: posts } = await http.get(apiEndPoint);
+    const { data: posts } = await http.get(config.apiEndPoint);
     this.setState({ posts });
   }
 
   handleAdd = async () => {
     const obj = { title: "a", body: "b" };
-    const { data: post } = await http.post(apiEndPoint, obj);
+    const { data: post } = await http.post(config.apiEndPoint, obj);
     const posts = [post, ...this.state.posts];
     this.setState({ posts });
   };
 
   handleUpdate = async (post) => {
     post.title = "UPDATED";
-    await http.put(apiEndPoint + "/" + post.id, post); //pessimistic update
+    await http.put(config.apiEndPoint + "/" + post.id, post); //pessimistic update
     const posts = [...this.state.posts];
     const index = posts.indexOf(post);
     posts[index] = { ...post };
@@ -36,7 +36,7 @@ class App extends Component {
     this.setState({ posts });
 
     try {
-      await http.delete(apiEndPoint + "/" + post.id); //optimistic update
+      await http.delete(config.apiEndPoint + "/" + post.id); //optimistic update
       console.log("Deleted");
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
