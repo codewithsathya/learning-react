@@ -36,7 +36,17 @@ class App extends Component {
     try {
       await axios.delete(apiEndPoint + "/" + post.id); //optimistic update
     } catch (ex) {
-      alert("Couldn't delete the post due to some error");
+      // Excepted (404: not found, 400: bad request) - CLIENT ERRORS
+      // - Display a specific error message
+      if (ex.response && ex.response.status == 404)
+        alert("Couldn't delete the post due to some error");
+      else {
+        //Unexpected (network down, server down, db down, bug)
+        // - Log them
+        // - Display a generic and friendly error message
+        console.log("Logging the error", ex);
+        alert("An unexpected error occurred");
+      }
       this.setState({ posts: originalPosts });
     }
   };
