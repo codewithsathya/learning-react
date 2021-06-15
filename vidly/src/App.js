@@ -20,7 +20,7 @@ class App extends Component {
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
-      console.log(user);
+      this.setState({ user });
     } catch (ex) {}
   }
 
@@ -28,7 +28,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar />
+        <NavBar user={this.state.user} />
         <main className="container">
           <Switch>
             <Route path="/register" component={RegisterForm} />
