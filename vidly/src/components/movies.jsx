@@ -104,7 +104,6 @@ class Movies extends Component {
     const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
     const { totalCount, data: movies } = this.getPagedData();
 
-    if (count === 0) return <p>There are no movies in the database.</p>;
     return (
       <div className="row">
         <div className="col-3">
@@ -135,7 +134,7 @@ class Movies extends Component {
           />
           <Pagination
             itemsCount={totalCount}
-            pageSize={pageSize} 
+            pageSize={pageSize}
             onPageChange={this.handlePageChange}
             currentPage={currentPage}
           />
